@@ -1,0 +1,26 @@
+language: generic
+os:
+- linux
+- osx
+env:
+  global:
+  - THIS_PACKAGE=pydeltarcm
+  - TRAVIS_PYTHON_VERSION="2.7"
+  - NUMPY_VERSION="1.9"
+  - secure: "n+ywufPh5ShAjI88W3iHQT2+Yus2IxuLgJGoJ7/NgN0aVaT/da3twbY5EqOxfUKINNQFZtIjmUFJhDWMXOqQ72UoaztnDZxQ7g5oHuirHjU5Y2tDGGdbo/lF3ae62NIez91wpfmBhVre8o4///+iaEuDi6wAJRwG/vQK8c9Rrxtbdl7+VMCqjR7YkQd+xbS2Nlb6Lui6lGk8OYMOt0DW7vuaNOqxgNORVY9ackAIKhponpJvvCLwh/IPAL3xltwYIyu2D0tv+DSuQMjkLFnde2oAnpecRVcq+kouK6QE+o167nH5OhLAf84wSdBuxd7JA4X7o2LBe2LTzga5bJRnh05uIaJMqMkKHgExrcGWRnfD6GGL2EhK3Nna79c5pveIvSmyiLSly3V+tyJEEuCh8gImYRhqPRODwFlcIIy2PsaeYiI/Hci3vH10IIXyGuodcpruZZ1AbiFUOjLTS5wLUSSvy56DllgqrMccgXkEgSrXwEb+m3cSsWHr05MmSYbOCoP8sYL/5H9SK4Wj+2goYu3w0OqMydwAOnDAG6pZ3UA8UrqVO+e9rcsGMnXjqYlqUrkHmzHMieNKn61s4sKSkYW2ElPLWMrh2z5tw06FV65O3VO625WAur5szbbFuIXF80LUpRFectBSi8W5Rt3izh5yEFovhRh4KCC4yyszhcI="
+sudo: false
+before_install:
+- |
+  if [[ $TRAVIS_OS_NAME == "osx" ]]; then
+    brew remove --force $(brew list)
+    brew cleanup -s
+    rm -rf $(brew --cache)
+  fi
+install:
+- bash ci/travis/install_python.sh $HOME/miniconda
+- export PATH="$HOME/miniconda/bin:$PATH"
+script:
+- conda build recipe -c conda-forge -c csdms-stack
+after_success:
+- if [[ $TRAVIS_BRANCH == "master" ]]; then export CHANNEL="main"; fi
+- bash ci/travis/deploy_to_anaconda.sh $THIS_PACKAGE
