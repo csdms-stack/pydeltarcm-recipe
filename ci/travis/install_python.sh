@@ -11,9 +11,9 @@ else
   OS="Linux-x86_64";
 fi
 if [[ "$TRAVIS_PYTHON_VERSION" == 2.* ]]; then
-  curl http://repo.continuum.io/miniconda/Miniconda-latest-$OS.sh > miniconda.sh;
+  curl https://repo.continuum.io/miniconda/Miniconda-latest-$OS.sh > miniconda.sh;
 else
-  curl http://repo.continuum.io/miniconda/Miniconda3-latest-$OS.sh > miniconda.sh;
+  curl https://repo.continuum.io/miniconda/Miniconda3-latest-$OS.sh > miniconda.sh;
 fi
 bash miniconda.sh -b -p $PREFIX
 export PATH="$PREFIX/bin:$PATH"
