@@ -34,6 +34,8 @@ build:
 test:
   imports:
     - pyDeltaRCM
+  commands:
+    - export MPLBACKEND=Agg
 
 about:
   home: http://csdms.colorado.edu/wiki/Model:PyDeltaRCM
