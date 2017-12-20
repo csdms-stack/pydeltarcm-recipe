@@ -31,12 +31,6 @@ build:
   number: 1
   script: python setup.py install --single-version-externally-managed --record record.txt
 
-test:
-  imports:
-    - pyDeltaRCM
-  commands:
-    - export MPLBACKEND=Agg
-
 about:
   home: http://csdms.colorado.edu/wiki/Model:PyDeltaRCM
   license: MIT
